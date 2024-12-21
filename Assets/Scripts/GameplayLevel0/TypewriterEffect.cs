@@ -49,7 +49,6 @@ public class TypewriterEffect : MonoBehaviour
             }
         }
 
-        // Append the last word if necessary
         AppendCurrentWordToDialogue();
     }
 
