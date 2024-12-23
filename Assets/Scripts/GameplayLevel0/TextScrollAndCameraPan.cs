@@ -13,7 +13,6 @@ public class TextScrollAndCameraPan : MonoBehaviour {
     public float panSpeed = 2f;
     public float typingSpeed = 0.1f;
     public string fullText;
-
     public float fadeDuration = 1f;
     public float titleDisplayTime = 5f;
 
@@ -44,15 +43,15 @@ public class TextScrollAndCameraPan : MonoBehaviour {
         cameraPanning = true;
 
         yield return StartCoroutine(FadeInTitleAndBackground());
+        
+        yield return new WaitForSeconds(titleDisplayTime);
+
+        yield return StartCoroutine(FadeOutTitleAndBackground());
 
         while (mainCamera.transform.position.y > cameraTargetPosition.y)
         {
             yield return null;
         }
-
-        yield return new WaitForSeconds(titleDisplayTime);
-
-        yield return StartCoroutine(FadeOutTitleAndBackground());
     }
 
     private IEnumerator TypeText() {
@@ -107,8 +106,6 @@ public class TextScrollAndCameraPan : MonoBehaviour {
 
         titleText.alpha = 1;
         titleBackground.alpha = 1;
-
-        Debug.Log("Fade-in complete: Title and background visible.");
     }
 
 

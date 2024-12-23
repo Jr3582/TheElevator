@@ -8022,15 +8022,15 @@ MonoBehaviour:
   textContainer: {fileID: 2087486556}
   mainCamera: {fileID: 1649808553}
   cameraTargetPosition: {x: -100, y: -22.5, z: -10}
-  scrollSpeed: 0.125
-  panSpeed: 0.125
-  typingSpeed: 0.001
+  scrollSpeed: 0.2
+  panSpeed: 0.2
+  typingSpeed: 0.065
   fullText: The year is 2125, and humanity is on the brink of extinction.A year prior,
     a mysterious disease that causes mass hysteria emerged.Everybody that you once
     know and love is dead and gone...Recently you have also been infected with this
     disease.Not much is known about this global infection.But what is known is that
     you have 10 days left before you die.3 of which you spent wondering around in
-    an forest.Spend your last 7 days wisely....
+    an forest looking for a cure.Spend your last 7 days wisely....
   fadeDuration: 2.5
   titleDisplayTime: 5
 --- !u!4 &1484537264
