@@ -160,7 +160,7 @@ public class TextScrollAndCameraPan : MonoBehaviour {
                     cameraTargetPosition,
                     panSpeed * Time.deltaTime
                 );
-                Debug.Log("Camera Position during pan: " + mainCamera.transform.position);
+                // Debug.Log("Camera Position during pan: " + mainCamera.transform.position);
             }
         }
 
