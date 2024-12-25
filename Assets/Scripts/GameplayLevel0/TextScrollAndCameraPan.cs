@@ -149,10 +149,10 @@ public class TextScrollAndCameraPan : MonoBehaviour {
     }
 
     void Update() {
-        Debug.Log("Update method is running");
+        // Debug.Log("Update method is running");
         if (cameraPanning)
         {
-            Debug.Log("Camera Panning");
+            // Debug.Log("Camera Panning");
             if (mainCamera.transform.position.y - 1 > cameraTargetPosition.y)
             {
                 mainCamera.transform.position = Vector3.Lerp(
