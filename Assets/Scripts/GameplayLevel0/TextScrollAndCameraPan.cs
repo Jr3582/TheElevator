@@ -15,8 +15,11 @@ public class TextScrollAndCameraPan : MonoBehaviour {
     public string fullText;
     public float fadeDuration = 1f;
     public float titleDisplayTime = 5f;
+    public GameObject player;
+    public float followSpeed = 5f;
 
     private bool cameraPanning = false;
+    private bool cameraFollowingPlayer = false;
 
     void Start() {
         ResetTitleAlpha();
@@ -48,10 +51,21 @@ public class TextScrollAndCameraPan : MonoBehaviour {
 
         yield return StartCoroutine(FadeOutTitleAndBackground());
 
-        while (mainCamera.transform.position.y > cameraTargetPosition.y)
+        while (mainCamera.transform.position.y > cameraTargetPosition.y + 2f)
         {
+            mainCamera.transform.position = Vector3.Lerp(
+                mainCamera.transform.position,
+                cameraTargetPosition,
+                panSpeed * Time.deltaTime
+            );
             yield return null;
         }
+
+        mainCamera.transform.position = new Vector3(mainCamera.transform.position.x, cameraTargetPosition.y, mainCamera.transform.position.z);
+
+        cameraPanning = false;
+
+        cameraFollowingPlayer = true;
     }
 
     private IEnumerator TypeText() {
@@ -135,16 +149,35 @@ public class TextScrollAndCameraPan : MonoBehaviour {
     }
 
     void Update() {
+        // Debug.Log("Update method is running");
         if (cameraPanning)
         {
-            if (mainCamera.transform.position.y > cameraTargetPosition.y)
+            // Debug.Log("Camera Panning");
+            if (mainCamera.transform.position.y - 1 > cameraTargetPosition.y)
             {
                 mainCamera.transform.position = Vector3.Lerp(
                     mainCamera.transform.position,
                     cameraTargetPosition,
                     panSpeed * Time.deltaTime
                 );
+                // Debug.Log("Camera Position during pan: " + mainCamera.transform.position);
             }
+        }
+
+        if (cameraFollowingPlayer)
+        {
+            // Debug.Log("Camera Following Player");
+            // Debug.Log("Camera Position: " + mainCamera.transform.position);
+            // Debug.Log("Player Position: " + player.transform.position);
+
+            float yOffset = 10f;
+
+            Vector3 targetPosition = player.transform.position;
+            targetPosition.z = mainCamera.transform.position.z;
+            targetPosition.y += yOffset;
+            mainCamera.transform.position = Vector3.Lerp(mainCamera.transform.position, targetPosition, followSpeed * Time.deltaTime);
+
+            // Debug.Log("New Camera Position after follow: " + mainCamera.transform.position);
         }
     }
 }

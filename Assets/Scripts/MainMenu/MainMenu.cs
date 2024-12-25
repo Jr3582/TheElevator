@@ -18,6 +18,10 @@ public class MainMenuManager : MonoBehaviour
     {
         StartCoroutine(FadeOutAndLoadScene("GameplayLevel0"));
     }
+    public void LoadSettingsPage()
+    {
+        StartCoroutine(FadeOutAndLoadScene("Settings"));
+    }
 
     public void QuitGame()
     {

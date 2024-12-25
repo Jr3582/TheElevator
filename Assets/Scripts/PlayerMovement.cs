@@ -5,25 +5,41 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private float horizontal;
-    private float speed = 8f;
-    private float jumpingPower = 18f;
+    public float speed = 8f;
+    public float jumpingPower = 18f;
     private bool isFacingRight = true;
 
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
+    [SerializeField] private Animator animator;
 
-    // Update is called once per frame
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
 
-        if (Input.GetButtonDown("Jump") && isGrounded())
-        {
-            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+        animator.SetFloat("Speed", Mathf.Abs(horizontal));
+
+        if (rb.velocity.y < 0 && !isGrounded()) {
+            animator.SetBool("IsFalling", true);
+
+        } else if (rb.velocity.y > 0) {
+            animator.SetBool("IsFalling", false);
+
+        } else if (isGrounded()) {
+            animator.SetBool("IsGrounded", true);
+
+            animator.SetBool("IsFalling", false);
+
         }
 
-        if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f)
+        if(Input.GetButtonDown("Jump") && isGrounded()) 
+        {
+            animator.SetTrigger("Jump");
+
+            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+        } 
+        else if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f) 
         {
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         }
