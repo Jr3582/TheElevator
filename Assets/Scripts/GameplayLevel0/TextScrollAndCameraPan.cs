@@ -1,11 +1,23 @@
 using UnityEngine;
 using TMPro;
 using System.Collections;
+using UnityEngine.UI;
 
 public class TextScrollAndCameraPan : MonoBehaviour {
     public TMP_Text dialogueText;
     public TMP_Text titleText;
     public TMP_Text titleBackground;
+    public Image profile;
+    public Image characterSprite;
+    public Image heart1;
+    public Image heart2;
+    public Image heart3;
+    public Image staminaBar;
+    public Image staminaFill;
+    public Image bookBag;
+    public Image Journal;
+    public Image chickenStick;
+    public Image HungerBar;
     public RectTransform textContainer;
     public Camera mainCamera;
     public Vector3 cameraTargetPosition;
@@ -66,6 +78,8 @@ public class TextScrollAndCameraPan : MonoBehaviour {
         cameraPanning = false;
 
         cameraFollowingPlayer = true;
+
+        yield return StartCoroutine(FadeInCharacterUI());
     }
 
     private IEnumerator TypeText() {
@@ -146,6 +160,101 @@ public class TextScrollAndCameraPan : MonoBehaviour {
         backgroundColor.a = 0;
         titleText.color = titleColor;
         titleBackground.color = backgroundColor;
+    }
+
+    private IEnumerator FadeInCharacterUI() {
+        float elapsedTime = 0f;
+
+        Color profileColor = profile.color;
+        Color characterSpriteColor = characterSprite.color;
+        Color heart1Color = heart1.color;
+        Color heart2Color = heart2.color;
+        Color heart3Color = heart3.color;
+        Color staminaBarColor = staminaBar.color;
+        Color staminaFillColor = staminaFill.color;
+        Color bookBagColor = bookBag.color;
+        Color journalColor = Journal.color;
+        Color chickenStickColor = chickenStick.color;
+        Color hungerBarColor = HungerBar.color;
+
+        profileColor.a = 0;
+        characterSpriteColor.a = 0;
+        heart1Color.a = 0;
+        heart2Color.a = 0;
+        heart3Color.a = 0;
+        staminaBarColor.a = 0;
+        staminaFillColor.a = 0;
+        bookBagColor.a = 0;
+        journalColor.a = 0;
+        chickenStickColor.a = 0;
+        hungerBarColor.a = 0;
+
+        profile.color = profileColor;
+        characterSprite.color = characterSpriteColor;
+        heart1.color = heart1Color;
+        heart2.color = heart2Color;
+        heart3.color = heart3Color;
+        staminaBar.color = staminaBarColor;
+        staminaFill.color = staminaFillColor;
+        bookBag.color = bookBagColor;
+        Journal.color = journalColor;
+        chickenStick.color = chickenStickColor;
+        HungerBar.color = hungerBarColor;
+
+        while (elapsedTime < fadeDuration)
+        {
+            float alpha = Mathf.Lerp(0, 1, elapsedTime / fadeDuration);
+            profileColor.a = alpha;
+            characterSpriteColor.a = alpha;
+            heart1Color.a = alpha;
+            heart2Color.a = alpha;
+            heart3Color.a = alpha;
+            staminaBarColor.a = alpha;
+            staminaFillColor.a = alpha;
+            bookBagColor.a = alpha;
+            journalColor.a = alpha;
+            chickenStickColor.a = alpha;
+            hungerBarColor.a = alpha;
+
+            profile.color = profileColor;
+            characterSprite.color = characterSpriteColor;
+            heart1.color = heart1Color;
+            heart2.color = heart2Color;
+            heart3.color = heart3Color;
+            staminaBar.color = staminaBarColor;
+            staminaFill.color = staminaFillColor;
+            bookBag.color = bookBagColor;
+            Journal.color = journalColor;
+            chickenStick.color = chickenStickColor;
+            HungerBar.color = hungerBarColor;
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        profileColor.a = 1;
+        characterSpriteColor.a = 1;
+        heart1Color.a = 1;
+        heart2Color.a = 1;
+        heart3Color.a = 1;
+        staminaBarColor.a = 1;
+        staminaFillColor.a = 1;
+        bookBagColor.a = 1;
+        journalColor.a = 1;
+        chickenStickColor.a = 1;
+        hungerBarColor.a = 1;
+
+        profile.color = profileColor;
+        characterSprite.color = characterSpriteColor;
+        heart1.color = heart1Color;
+        heart2.color = heart2Color;
+        heart3.color = heart3Color;
+        staminaBar.color = staminaBarColor;
+        staminaFill.color = staminaFillColor;
+        bookBag.color = bookBagColor;
+        Journal.color = journalColor;
+        chickenStick.color = chickenStickColor;
+        HungerBar.color = hungerBarColor;
     }
 
     void Update() {
