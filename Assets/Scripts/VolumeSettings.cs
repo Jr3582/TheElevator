@@ -13,17 +13,17 @@ public class VolumeSettings : MonoBehaviour
     const string MIXER_MUSIC = "MusicVolume";
     const string MIXER_SFX = "SFXVolume";
 
-    void Awake()
+    public void Awake()
     {
         musicSlider.onValueChanged.AddListener(SetMusicVolume);
         sfxSlider.onValueChanged.AddListener(SetMusicVolume);
     }
     
-    void SetMusicVolume(float value)
+    public void SetMusicVolume(float value)
     {
         mixer.SetFloat(MIXER_MUSIC, Mathf.Log10(value)*20);
     }
-    void SetSFXVolume(float value)
+    public void SetSFXVolume(float value)
     {
         mixer.SetFloat(MIXER_SFX, Mathf.Log10(value)*20);
     }
