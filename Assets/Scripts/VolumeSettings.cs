@@ -24,7 +24,7 @@ public class VolumeSettings : MonoBehaviour
         musicSlider.value = PlayerPrefs.GetFloat(AudioManager.MUSIC_KEY, 1f);
     }
 
-    public void onDisable()
+    public void onDisable() //when you exit the scene or object is disabled
     {
         PlayerPrefs.SetFloat(AudioManager.MUSIC_KEY, musicSlider.value);
     }

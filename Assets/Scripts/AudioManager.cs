@@ -21,7 +21,7 @@ public class AudioManager : MonoBehaviour
         }
         LoadVolume();
     }
-    public void LoadVolume() //Volume solved in VolumeSettings.cs
+    public void LoadVolume() //Volume saved in VolumeSettings.cs
     {
         float musicVolume = PlayerPrefs.GetFloat(MUSIC_KEY, 1f);
         mixer.SetFloat(VolumeSettings.MIXER_MUSIC, Mathf.Log10(musicVolume)*20);
