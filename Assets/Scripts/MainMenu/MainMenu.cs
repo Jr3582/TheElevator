@@ -23,6 +23,10 @@ public class MainMenuManager : MonoBehaviour
         StartCoroutine(FadeOutAndLoadScene("Settings"));
     }
 
+    public void LoadMainMenuPage(){
+        StartCoroutine(FadeOutAndLoadScene("MainMenu"));
+    }
+
     public void QuitGame()
     {
         Application.Quit();
