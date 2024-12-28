@@ -12,7 +12,9 @@ public class TextScrollAndCameraPan : MonoBehaviour {
     public Image heart1;
     public Image heart2;
     public Image heart3;
-    public Image staminaBar;
+    public Image feetPics;
+    public Image staminaBackground;
+    public Image staminaBarBackground;
     public Image staminaFill;
     public Image bookBag;
     public Image Journal;
@@ -162,54 +164,68 @@ public class TextScrollAndCameraPan : MonoBehaviour {
         titleBackground.color = backgroundColor;
     }
 
-    private IEnumerator FadeInCharacterUI() {
+    private IEnumerator FadeInCharacterUI()
+    {
         float elapsedTime = 0f;
 
+        // Initializing colors for all UI elements
         Color profileColor = profile.color;
         Color characterSpriteColor = characterSprite.color;
         Color heart1Color = heart1.color;
         Color heart2Color = heart2.color;
         Color heart3Color = heart3.color;
-        Color staminaBarColor = staminaBar.color;
+        Color bootColor = feetPics.color;
+        Color stamBackground = staminaBackground.color;
+        Color stamBarBackground = new Color(100f / 255f, 100f / 255f, 0f);
         Color staminaFillColor = staminaFill.color;
         Color bookBagColor = bookBag.color;
         Color journalColor = Journal.color;
         Color chickenStickColor = chickenStick.color;
         Color hungerBarColor = HungerBar.color;
 
+        // Set initial alpha to 0 for all elements
         profileColor.a = 0;
         characterSpriteColor.a = 0;
         heart1Color.a = 0;
         heart2Color.a = 0;
         heart3Color.a = 0;
-        staminaBarColor.a = 0;
+        bootColor.a = 0;
+        stamBackground.a = 0;
+        stamBarBackground.a = 0;
         staminaFillColor.a = 0;
         bookBagColor.a = 0;
         journalColor.a = 0;
         chickenStickColor.a = 0;
         hungerBarColor.a = 0;
 
+        // Apply the initial alpha
         profile.color = profileColor;
         characterSprite.color = characterSpriteColor;
         heart1.color = heart1Color;
         heart2.color = heart2Color;
         heart3.color = heart3Color;
-        staminaBar.color = staminaBarColor;
+        feetPics.color = bootColor;
+        staminaBackground.color = stamBackground;
+        staminaBarBackground.color = stamBarBackground;
         staminaFill.color = staminaFillColor;
         bookBag.color = bookBagColor;
         Journal.color = journalColor;
         chickenStick.color = chickenStickColor;
         HungerBar.color = hungerBarColor;
 
+        // Gradually increase the alpha value over time
         while (elapsedTime < fadeDuration)
         {
             float alpha = Mathf.Lerp(0, 1, elapsedTime / fadeDuration);
+
             profileColor.a = alpha;
             characterSpriteColor.a = alpha;
             heart1Color.a = alpha;
             heart2Color.a = alpha;
             heart3Color.a = alpha;
-            staminaBarColor.a = alpha;
+            bootColor.a = alpha;
+            stamBackground.a = alpha;
+            stamBarBackground.a = alpha;
             staminaFillColor.a = alpha;
             bookBagColor.a = alpha;
             journalColor.a = alpha;
@@ -221,7 +237,9 @@ public class TextScrollAndCameraPan : MonoBehaviour {
             heart1.color = heart1Color;
             heart2.color = heart2Color;
             heart3.color = heart3Color;
-            staminaBar.color = staminaBarColor;
+            feetPics.color = bootColor;
+            staminaBackground.color = stamBackground;
+            staminaBarBackground.color = stamBarBackground;
             staminaFill.color = staminaFillColor;
             bookBag.color = bookBagColor;
             Journal.color = journalColor;
@@ -232,12 +250,15 @@ public class TextScrollAndCameraPan : MonoBehaviour {
             yield return null;
         }
 
+        // Ensure all elements are fully visible at the end
         profileColor.a = 1;
         characterSpriteColor.a = 1;
         heart1Color.a = 1;
         heart2Color.a = 1;
         heart3Color.a = 1;
-        staminaBarColor.a = 1;
+        bootColor.a = 1;
+        stamBackground.a = 1;
+        stamBarBackground.a = 1;
         staminaFillColor.a = 1;
         bookBagColor.a = 1;
         journalColor.a = 1;
@@ -249,13 +270,16 @@ public class TextScrollAndCameraPan : MonoBehaviour {
         heart1.color = heart1Color;
         heart2.color = heart2Color;
         heart3.color = heart3Color;
-        staminaBar.color = staminaBarColor;
+        feetPics.color = bootColor;
+        staminaBackground.color = stamBackground;
+        staminaBarBackground.color = stamBarBackground;
         staminaFill.color = staminaFillColor;
         bookBag.color = bookBagColor;
         Journal.color = journalColor;
         chickenStick.color = chickenStickColor;
         HungerBar.color = hungerBarColor;
     }
+
 
     void Update() {
         // Debug.Log("Update method is running");
