@@ -35,7 +35,8 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         horizontal = Input.GetAxisRaw("Horizontal");
-        isSprinting = Input.GetKey(KeyCode.LeftShift) && currentStamina > 0;
+
+        isSprinting = Input.GetKey(KeyCode.LeftShift) && currentStamina >= 0;
 
         animator.SetFloat("Speed", Mathf.Abs(horizontal));
 
@@ -52,7 +53,7 @@ public class PlayerMovement : MonoBehaviour
 
         }
 
-        if(Input.GetButtonDown("Jump") && isGrounded()) 
+        if(Input.GetButtonDown("Jump") && isGrounded() && currentStamina >= jumpStaminaCost) 
         {
             animator.SetTrigger("Jump");
 
@@ -69,6 +70,7 @@ public class PlayerMovement : MonoBehaviour
         {
             currentStamina += staminaRegenRate * Time.deltaTime; // Regen stamina
         }
+
         currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
         
         float staminaPercent = currentStamina / maxStamina;
@@ -78,8 +80,9 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void FixedUpdate()
-    {
-        float currentSpeed = isSprinting ? speed * sprintMultiplier : speed;
+    {    
+        float currentSpeed = (isSprinting && currentStamina > 0) ? speed * sprintMultiplier : speed;
+
         rb.velocity = new Vector2(horizontal * currentSpeed, rb.velocity.y);
 
         if (horizontal != 0 && isGrounded())
