@@ -36,7 +36,6 @@ public class HungerBarScript : MonoBehaviour
     {
         currentHunger -= amount;
         currentHunger = Mathf.Clamp(currentHunger, 0, maxHunger);
-        Debug.Log(currentHunger);
     }
 
     private void UpdateHungerBar()
