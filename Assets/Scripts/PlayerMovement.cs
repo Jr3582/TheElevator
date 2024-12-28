@@ -18,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
     public float staminaRegenRate = 10f; // Per second
     private bool isSprinting;
 
+    public HungerBarScript hungerSystem;
+
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private LayerMask groundLayer;
@@ -60,6 +62,8 @@ public class PlayerMovement : MonoBehaviour
             rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
 
             currentStamina -= jumpStaminaCost;
+
+            hungerSystem.DepleteHunger(5f); 
         } 
         else if (Input.GetButtonUp("Jump") && rb.velocity.y > 0f) 
         {
@@ -68,13 +72,19 @@ public class PlayerMovement : MonoBehaviour
 
         if (currentStamina < maxStamina && (horizontal == 0 || !isSprinting) && isGrounded())
         {
-            currentStamina += staminaRegenRate * Time.deltaTime; // Regen stamina
+            currentStamina += staminaRegenRate * Time.deltaTime;
         }
 
         currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
         
         float staminaPercent = currentStamina / maxStamina;
         staminaBar.sizeDelta = new Vector2(originalStaminaBarWidth * staminaPercent, staminaBar.sizeDelta.y);
+
+        if (isSprinting || horizontal != 0)
+        {
+            float hungerDepletionRate = isSprinting ? 2f : 0.5f;
+            hungerSystem.DepleteHunger(hungerDepletionRate * Time.deltaTime * 0.5f);
+        }
 
         Flip();
     }
@@ -92,8 +102,6 @@ public class PlayerMovement : MonoBehaviour
         }
 
         currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
-
-        Debug.Log(rb.velocity);
     }
 
     private bool isGrounded()
