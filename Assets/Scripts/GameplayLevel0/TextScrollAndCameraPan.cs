@@ -29,15 +29,36 @@ public class TextScrollAndCameraPan : MonoBehaviour {
     public float titleDisplayTime = 5f;
     public GameObject player;
     public float followSpeed = 5f;
+    public Image bookBagUIPanel;
+    private bool isBookBagOpen = false;
+
 
     private bool cameraPanning = false;
     private bool cameraFollowingPlayer = false;
+    private bool isProcessingToggle = false;
 
-    void Start() {
+    void Start()
+    {
+        // Add debug log to verify the bookBag reference
+        if (bookBag != null)
+        {
+            Button bookBagButton = bookBag.gameObject.GetComponent<Button>();
+            if (bookBagButton == null)
+            {
+                bookBagButton = bookBag.gameObject.AddComponent<Button>();
+            }
+            bookBagButton.onClick.AddListener(OnBookBagIconClicked);
+        }
+
+        if (bookBagUIPanel != null)
+        {
+            bookBagUIPanel.gameObject.SetActive(false);
+        }
+
         ResetTitleAlpha();
         StartCoroutine(MainSequence());
     }
-
+    
     private void ResetTitleAlpha() {
         Color titleColor = titleText.color;
         Color backgroundColor = titleBackground.color;
@@ -49,6 +70,26 @@ public class TextScrollAndCameraPan : MonoBehaviour {
         titleBackground.color = backgroundColor;
     }
 
+    private void ToggleBookBag()
+    {
+        if (bookBagUIPanel == null)
+        {
+            Debug.LogError("bookBagUIPanel is not assigned!");
+            return;
+        }
+
+        // Toggle the state
+        isBookBagOpen = !isBookBagOpen;
+        bookBagUIPanel.gameObject.SetActive(isBookBagOpen);
+
+        // Log the state for debugging
+        Debug.Log("BookBag UI is now " + (isBookBagOpen ? "Open" : "Closed"));
+    }
+
+    private void OnBookBagIconClicked()
+    {
+        ToggleBookBag();
+    }
 
     private IEnumerator MainSequence() {
         yield return StartCoroutine(TypeText());
@@ -258,6 +299,10 @@ public class TextScrollAndCameraPan : MonoBehaviour {
     }
 
     void Update() {
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            ToggleBookBag();
+        }
         // Debug.Log("Update method is running");
         if (cameraPanning)
         {
