@@ -1140,7 +1140,7 @@ GameObject:
   m_Component:
   - component: {fileID: 176287678}
   m_Layer: 0
-  m_Name: RandomGameObjects
+  m_Name: Arrows
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16655,7 +16655,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 960, y: -539.8567}
+  m_AnchoredPosition: {x: 960, y: -540.2947}
   m_SizeDelta: {x: 1800, y: 1000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2090501817
@@ -17169,3 +17169,4 @@ SceneRoots:
   - {fileID: 191013668}
   - {fileID: 2091961382}
   - {fileID: 515156840}
+  - {fileID: 275384014}
