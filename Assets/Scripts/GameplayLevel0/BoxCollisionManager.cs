@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class BoxCollisionManager : MonoBehaviour
 {
-    [SerializeField] private GameObject uiObject;
+    [SerializeField] private GameObject uiTutorial;
+    [SerializeField] private GameObject uiItem;
     void Start()
     {
-        uiObject.SetActive(false);
+        uiTutorial.SetActive(false);
+        uiItem.SetActive(false);
     }
 
     void Update()
@@ -15,10 +17,7 @@ public class BoxCollisionManager : MonoBehaviour
         if (Input.GetKey(KeyCode.F))
 
         {
-            // Perform your action when the key is pressed
-
-            Debug.Log("Key pressed: F");
-
+            uiItem.SetActive(true);
         }
     }
     public void OnTriggerEnter2D(Collider2D player)
@@ -30,8 +29,8 @@ public class BoxCollisionManager : MonoBehaviour
     }
     private IEnumerator DisplayUI()
     {
-        uiObject.SetActive(true);
+        uiTutorial.SetActive(true);
         yield return new WaitForSeconds(10);
-        uiObject.SetActive(false);
+        uiTutorial.SetActive(false);
     }
 }
