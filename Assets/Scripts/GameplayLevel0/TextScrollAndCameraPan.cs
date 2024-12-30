@@ -12,12 +12,21 @@ public class TextScrollAndCameraPan : MonoBehaviour {
     public Image heart1;
     public Image heart2;
     public Image heart3;
-    public Image staminaBar;
+    public Image feetPics;
+    public Image staminaBackground;
+    public Image staminaBarBackground;
     public Image staminaFill;
-    public Image bookBag;
-    public Image Journal;
     public Image chickenStick;
     public Image HungerBar;
+    //Inventory images;
+    public Image InventorySlot1;
+    public Image InventorySlot2;
+    public Image InventorySlot3;
+    public Image InventorySlot4;
+    public Image InventorySlot5;
+    public Image InventorySlot6;
+    public Image InventoryBackground;
+    public Image InventoryBorder;
     public RectTransform textContainer;
     public Camera mainCamera;
     public Vector3 cameraTargetPosition;
@@ -162,71 +171,118 @@ public class TextScrollAndCameraPan : MonoBehaviour {
         titleBackground.color = backgroundColor;
     }
 
-    private IEnumerator FadeInCharacterUI() {
+    private IEnumerator FadeInCharacterUI()
+    {
         float elapsedTime = 0f;
 
+        // Initializing colors for all UI elements
         Color profileColor = profile.color;
         Color characterSpriteColor = characterSprite.color;
         Color heart1Color = heart1.color;
         Color heart2Color = heart2.color;
         Color heart3Color = heart3.color;
-        Color staminaBarColor = staminaBar.color;
+        Color bootColor = feetPics.color;
+        Color stamBackground = staminaBackground.color;
+        Color stamBarBackground = new Color(100f / 255f, 100f / 255f, 0f);
         Color staminaFillColor = staminaFill.color;
-        Color bookBagColor = bookBag.color;
-        Color journalColor = Journal.color;
         Color chickenStickColor = chickenStick.color;
         Color hungerBarColor = HungerBar.color;
+        Color inventoryBorderColor = new Color(141f / 255f, 48f / 255f, 48f / 255f);
+        Color inventoryBackgroundColor = new Color(43f / 225f, 35f / 255f, 40f / 255f);
+        Color inventorySlot1color = InventorySlot1.color;
+        Color inventorySlot2color = InventorySlot2.color;
+        Color inventorySlot3color = InventorySlot3.color;
+        Color inventorySlot4color = InventorySlot4.color;
+        Color inventorySlot5color = InventorySlot5.color;
+        Color inventorySlot6color = InventorySlot6.color;
 
+        // Set initial alpha to 0 for all elements
         profileColor.a = 0;
         characterSpriteColor.a = 0;
         heart1Color.a = 0;
         heart2Color.a = 0;
         heart3Color.a = 0;
-        staminaBarColor.a = 0;
+        bootColor.a = 0;
+        stamBackground.a = 0;
+        stamBarBackground.a = 0;
         staminaFillColor.a = 0;
-        bookBagColor.a = 0;
-        journalColor.a = 0;
         chickenStickColor.a = 0;
         hungerBarColor.a = 0;
+        inventoryBackgroundColor.a = 0;
+        inventoryBorderColor.a = 0;
+        inventorySlot1color.a = 0;
+        inventorySlot2color.a = 0;
+        inventorySlot3color.a = 0;
+        inventorySlot4color.a = 0;
+        inventorySlot5color.a = 0;
+        inventorySlot6color.a = 0;
 
+        // Apply the initial alpha
         profile.color = profileColor;
         characterSprite.color = characterSpriteColor;
         heart1.color = heart1Color;
         heart2.color = heart2Color;
         heart3.color = heart3Color;
-        staminaBar.color = staminaBarColor;
+        feetPics.color = bootColor;
+        staminaBackground.color = stamBackground;
+        staminaBarBackground.color = stamBarBackground;
         staminaFill.color = staminaFillColor;
-        bookBag.color = bookBagColor;
-        Journal.color = journalColor;
         chickenStick.color = chickenStickColor;
         HungerBar.color = hungerBarColor;
+        InventoryBackground.color = inventoryBackgroundColor;
+        InventoryBorder.color = inventoryBorderColor;
+        InventorySlot1.color = inventorySlot1color;
+        InventorySlot2.color = inventorySlot2color;
+        InventorySlot3.color = inventorySlot3color;
+        InventorySlot4.color = inventorySlot4color;
+        InventorySlot5.color = inventorySlot5color;
+        InventorySlot6.color = inventorySlot6color;
 
+        // Gradually increase the alpha value over time
         while (elapsedTime < fadeDuration)
         {
             float alpha = Mathf.Lerp(0, 1, elapsedTime / fadeDuration);
+
             profileColor.a = alpha;
             characterSpriteColor.a = alpha;
             heart1Color.a = alpha;
             heart2Color.a = alpha;
             heart3Color.a = alpha;
-            staminaBarColor.a = alpha;
+            bootColor.a = alpha;
+            stamBackground.a = alpha;
+            stamBarBackground.a = alpha;
             staminaFillColor.a = alpha;
-            bookBagColor.a = alpha;
-            journalColor.a = alpha;
             chickenStickColor.a = alpha;
             hungerBarColor.a = alpha;
+            inventoryBackgroundColor.a = alpha;
+            inventoryBorderColor.a = alpha;
+            inventorySlot1color.a = alpha;
+            inventorySlot2color.a = alpha;
+            inventorySlot3color.a = alpha;
+            inventorySlot4color.a = alpha;
+            inventorySlot5color.a = alpha;
+            inventorySlot6color.a = alpha;
 
             profile.color = profileColor;
             characterSprite.color = characterSpriteColor;
             heart1.color = heart1Color;
             heart2.color = heart2Color;
             heart3.color = heart3Color;
-            staminaBar.color = staminaBarColor;
+            feetPics.color = bootColor;
+            staminaBackground.color = stamBackground;
+            staminaBarBackground.color = stamBarBackground;
             staminaFill.color = staminaFillColor;
-            bookBag.color = bookBagColor;
-            Journal.color = journalColor;
             chickenStick.color = chickenStickColor;
             HungerBar.color = hungerBarColor;
+            InventoryBackground.color = inventoryBackgroundColor;
+            InventoryBorder.color = inventoryBorderColor;
+            InventorySlot1.color = inventorySlot1color;
+            InventorySlot2.color = inventorySlot2color;
+            InventorySlot3.color = inventorySlot3color;
+            InventorySlot4.color = inventorySlot4color;
+            InventorySlot5.color = inventorySlot5color;
+            InventorySlot6.color = inventorySlot6color;
+
 
             elapsedTime += Time.deltaTime;
             yield return null;
@@ -237,25 +293,42 @@ public class TextScrollAndCameraPan : MonoBehaviour {
         heart1Color.a = 1;
         heart2Color.a = 1;
         heart3Color.a = 1;
-        staminaBarColor.a = 1;
+        bootColor.a = 1;
+        stamBackground.a = 1;
+        stamBarBackground.a = 1;
         staminaFillColor.a = 1;
-        bookBagColor.a = 1;
-        journalColor.a = 1;
         chickenStickColor.a = 1;
         hungerBarColor.a = 1;
+        inventoryBackgroundColor.a = 1;
+        inventoryBorderColor.a = 1; 
+        inventorySlot1color.a = 1;
+        inventorySlot2color.a = 1;
+        inventorySlot3color.a = 1;
+        inventorySlot4color.a = 1;
+        inventorySlot5color.a = 1;
+        inventorySlot6color.a = 1;
 
         profile.color = profileColor;
         characterSprite.color = characterSpriteColor;
         heart1.color = heart1Color;
         heart2.color = heart2Color;
         heart3.color = heart3Color;
-        staminaBar.color = staminaBarColor;
+        feetPics.color = bootColor;
+        staminaBackground.color = stamBackground;
+        staminaBarBackground.color = stamBarBackground;
         staminaFill.color = staminaFillColor;
-        bookBag.color = bookBagColor;
-        Journal.color = journalColor;
         chickenStick.color = chickenStickColor;
         HungerBar.color = hungerBarColor;
+        InventoryBackground.color = inventoryBackgroundColor;
+        InventoryBorder.color = inventoryBorderColor;
+        InventorySlot1.color = inventorySlot1color;
+        InventorySlot2.color = inventorySlot2color;
+        InventorySlot3.color = inventorySlot3color;
+        InventorySlot4.color = inventorySlot4color;
+        InventorySlot5.color = inventorySlot5color;
+        InventorySlot6.color = inventorySlot6color;
     }
+
 
     void Update() {
         // Debug.Log("Update method is running");
