@@ -4992,11 +4992,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'The Elevator
+  m_text: 'The Fading Light
 
 
 
-    By: Michael Le, Channacy Un, Jimmy Ren'
+    By: Michael Le, Channacy Un, and Jimmy Ren'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dfdb5dc91b73fd4488b4e76318db1ab4, type: 2}
   m_sharedMaterial: {fileID: 8246979866983710253, guid: dfdb5dc91b73fd4488b4e76318db1ab4, type: 2}
@@ -5239,6 +5239,73 @@ Transform:
   - {fileID: 371493491}
   m_Father: {fileID: 191013668}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &801354720
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 801354721}
+  - component: {fileID: 801354723}
+  m_Layer: 0
+  m_Name: EnterCollider
+  m_TagString: Door
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &801354721
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801354720}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.3, y: -0.15, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1285897875}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!58 &801354723
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801354720}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.25
 --- !u!1 &807723190
 GameObject:
   m_ObjectHideFlags: 0
@@ -5304,11 +5371,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'The Elevator
+  m_text: 'The Fading Light
 
 
 
-    By: Michael Le, Channacy Un, Jimmy Ren'
+    By: Michael Le, Channacy Un, and Jimmy Ren'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: dfdb5dc91b73fd4488b4e76318db1ab4, type: 2}
   m_sharedMaterial: {fileID: 8246979866983710253, guid: dfdb5dc91b73fd4488b4e76318db1ab4, type: 2}
@@ -8281,6 +8348,7 @@ Transform:
   - {fileID: 526892715}
   - {fileID: 1619105313}
   - {fileID: 964934938}
+  - {fileID: 801354721}
   m_Father: {fileID: 2008002682}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1306822201
@@ -15724,6 +15792,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1484537264}
+  - {fileID: 2036189164}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1725059388
@@ -17026,6 +17095,7 @@ GameObject:
   - component: {fileID: 1884258719}
   - component: {fileID: 1884258721}
   - component: {fileID: 1884258722}
+  - component: {fileID: 1884258723}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -17152,7 +17222,9 @@ MonoBehaviour:
   staminaRegenRate: 10
   hungerSystem: {fileID: 1884258722}
   rb: {fileID: 1884258719}
+  playerCollider: {fileID: 585598312}
   groundCheck: {fileID: 1819524403}
+  groundCheckRadius: 0.2
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -17202,6 +17274,20 @@ MonoBehaviour:
   - {fileID: -1726973085, guid: 3845df11c50514e4b8d2a325c4f04fa8, type: 3}
   - {fileID: -889863667, guid: 3845df11c50514e4b8d2a325c4f04fa8, type: 3}
   hungerBarImage: {fileID: 2059994299}
+--- !u!114 &1884258723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1884258716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ecd20e17736d8e4a8289de0511f8586, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nextSceneName: GamePlayLevel1
+  spawnPositionInNextScene: {x: -320, y: 4, z: 0}
 --- !u!1 &1893042620
 GameObject:
   m_ObjectHideFlags: 0
@@ -17771,6 +17857,51 @@ Transform:
   - {fileID: 2101771719}
   m_Father: {fileID: 515156840}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2036189163
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2036189164}
+  - component: {fileID: 2036189165}
+  m_Layer: 0
+  m_Name: SpawnManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2036189164
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2036189163}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 303.61136, y: -90.78505, z: -1.0718426}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1712246229}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2036189165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2036189163}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a62e6125ba112a645883fc8155882d72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerSpawnPosition: {x: -234, y: 3.5, z: -3}
 --- !u!1 &2043230087
 GameObject:
   m_ObjectHideFlags: 0
@@ -18061,7 +18192,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 960, y: -539.7834}
+  m_AnchoredPosition: {x: 960, y: -539.9496}
   m_SizeDelta: {x: 1800, y: 1000}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2090501817
