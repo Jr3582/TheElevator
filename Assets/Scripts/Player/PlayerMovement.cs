@@ -21,7 +21,9 @@ public class PlayerMovement : MonoBehaviour
     public HungerBarScript hungerSystem;
 
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private Collider2D playerCollider;
     [SerializeField] private Transform groundCheck;
+    [SerializeField] private float groundCheckRadius = 0.2f;
     [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Animator animator;
     [SerializeField] private RectTransform staminaBar;
@@ -32,6 +34,12 @@ public class PlayerMovement : MonoBehaviour
         currentStamina = maxStamina;
 
         originalStaminaBarWidth = staminaBar.sizeDelta.x;
+
+        rb.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
+
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        playerCollider.sharedMaterial = Resources.Load<PhysicsMaterial2D>("LowFriction");
     }
 
     void Update()
@@ -106,7 +114,8 @@ public class PlayerMovement : MonoBehaviour
 
     private bool isGrounded()
     {
-        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+        return Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
+
     }
 
     private void Flip()
