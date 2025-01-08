@@ -9,7 +9,6 @@ public class PlayerMovement : MonoBehaviour
     public float sprintMultiplier = 1.5f;
     public float jumpingPower = 18f;
     private bool isFacingRight = true;
-
     public float maxStamina = 100f;
     private float currentStamina;
     public float walkStaminaDrain = 5f; // Per second
@@ -17,11 +16,18 @@ public class PlayerMovement : MonoBehaviour
     public float jumpStaminaCost = 20f; // Per jump
     public float staminaRegenRate = 10f; // Per second
     private bool isSprinting;
-
+    private Vector2 originalColliderSize;
+    private Vector2 originalColliderOffset;
+    public Vector2 crouchColliderSize = new Vector2(1f, 0.5f);
+    public Vector2 crouchColliderOffset = new Vector2(0f, -0.25f);
+    private bool isCrouching;
     public HungerBarScript hungerSystem;
+    public float crouchSpeedMultiplier = 0.5f;
+    public int maxJumps = 2;
+    private int jumpCount;
 
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] private Collider2D playerCollider;
+    [SerializeField] private BoxCollider2D playerCollider;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundCheckRadius = 0.2f;
     [SerializeField] private LayerMask groundLayer;
@@ -40,6 +46,12 @@ public class PlayerMovement : MonoBehaviour
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
 
         playerCollider.sharedMaterial = Resources.Load<PhysicsMaterial2D>("LowFriction");
+            
+        originalColliderSize = playerCollider.size;
+
+        originalColliderOffset = playerCollider.offset;
+
+        jumpCount = maxJumps;
     }
 
     void Update()
@@ -61,13 +73,12 @@ public class PlayerMovement : MonoBehaviour
 
             animator.SetBool("IsFalling", false);
 
+            jumpCount = maxJumps;
         }
 
-        if(Input.GetButtonDown("Jump") && isGrounded() && currentStamina >= jumpStaminaCost) 
+        if(Input.GetButtonDown("Jump") && currentStamina >= jumpStaminaCost && jumpCount > 0) 
         {
-            animator.SetTrigger("Jump");
-
-            rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+            Jump();
 
             currentStamina -= jumpStaminaCost;
 
@@ -93,13 +104,38 @@ public class PlayerMovement : MonoBehaviour
             float hungerDepletionRate = isSprinting ? 2f : 0.5f;
             hungerSystem.DepleteHunger(hungerDepletionRate * Time.deltaTime * 0.5f);
         }
+        if (Input.GetKey(KeyCode.C))
+        {
+            isCrouching = true;
+            animator.SetBool("IsCrouching", true);
+
+            playerCollider.size = crouchColliderSize;
+            playerCollider.offset = crouchColliderOffset;
+        }
+        else
+        {
+            isCrouching = false;
+            animator.SetBool("IsCrouching", false);
+
+            playerCollider.size = originalColliderSize;
+            playerCollider.offset = originalColliderOffset;
+        }
 
         Flip();
     }
 
     private void FixedUpdate()
     {    
-        float currentSpeed = (isSprinting && currentStamina > 0) ? speed * sprintMultiplier : speed;
+        float currentSpeed = speed;
+
+        if (isSprinting && currentStamina > 0)
+        {
+            currentSpeed *= sprintMultiplier;
+        }
+        else if (isCrouching)
+        {
+            currentSpeed *= crouchSpeedMultiplier;
+        }
 
         rb.velocity = new Vector2(horizontal * currentSpeed, rb.velocity.y);
 
@@ -127,5 +163,11 @@ public class PlayerMovement : MonoBehaviour
             localScale.x *= -1f;
             transform.localScale = localScale;
         }
+    }
+    private void Jump() { 
+        rb.velocity = new Vector2(rb.velocity.x, jumpingPower);
+        animator.SetTrigger("Jump");
+
+        jumpCount--;
     }
 }
