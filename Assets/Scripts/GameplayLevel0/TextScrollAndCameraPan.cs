@@ -25,6 +25,12 @@ public class TextScrollAndCameraPan : MonoBehaviour {
     public Image InventorySlot4;
     public Image InventorySlot5;
     public Image InventorySlot6;
+    public Image Slot1;
+    public Image Slot2;
+    public Image Slot3;
+    public Image Slot4;
+    public Image Slot5;
+    public Image Slot6;
     public Image InventoryBackground;
     public Image InventoryBorder;
     public RectTransform textContainer;
@@ -195,6 +201,12 @@ public class TextScrollAndCameraPan : MonoBehaviour {
         Color inventorySlot4color = InventorySlot4.color;
         Color inventorySlot5color = InventorySlot5.color;
         Color inventorySlot6color = InventorySlot6.color;
+        Color slotColor1 = new Color(75f / 255f, 69f / 255f, 73f/ 255f);
+        Color slotColor2 = new Color(75f / 255f, 69f / 255f, 73f/ 255f);
+        Color slotColor3 = new Color(75f / 255f, 69f / 255f, 73f/ 255f);
+        Color slotColor4 = new Color(75f / 255f, 69f / 255f, 73f/ 255f);
+        Color slotColor5 = new Color(75f / 255f, 69f / 255f, 73f/ 255f);
+        Color slotColor6 = new Color(75f / 255f, 69f / 255f, 73f/ 255f);
 
         // Set initial alpha to 0 for all elements
         profileColor.a = 0;
@@ -216,6 +228,12 @@ public class TextScrollAndCameraPan : MonoBehaviour {
         inventorySlot4color.a = 0;
         inventorySlot5color.a = 0;
         inventorySlot6color.a = 0;
+        slotColor1.a = 0;
+        slotColor2.a = 0;
+        slotColor3.a = 0;
+        slotColor4.a = 0;
+        slotColor5.a = 0;
+        slotColor6.a = 0;
 
         // Apply the initial alpha
         profile.color = profileColor;
@@ -237,6 +255,12 @@ public class TextScrollAndCameraPan : MonoBehaviour {
         InventorySlot4.color = inventorySlot4color;
         InventorySlot5.color = inventorySlot5color;
         InventorySlot6.color = inventorySlot6color;
+        Slot1.color = slotColor1;
+        Slot2.color = slotColor2;
+        Slot3.color = slotColor3;
+        Slot4.color = slotColor4;
+        Slot5.color = slotColor5;
+        Slot6.color = slotColor6;
 
         // Gradually increase the alpha value over time
         while (elapsedTime < fadeDuration)
@@ -262,6 +286,12 @@ public class TextScrollAndCameraPan : MonoBehaviour {
             inventorySlot4color.a = alpha;
             inventorySlot5color.a = alpha;
             inventorySlot6color.a = alpha;
+            slotColor1.a = alpha;
+            slotColor2.a = alpha;
+            slotColor3.a = alpha;
+            slotColor4.a = alpha;
+            slotColor5.a = alpha;
+            slotColor6.a = alpha;
 
             profile.color = profileColor;
             characterSprite.color = characterSpriteColor;
@@ -282,6 +312,12 @@ public class TextScrollAndCameraPan : MonoBehaviour {
             InventorySlot4.color = inventorySlot4color;
             InventorySlot5.color = inventorySlot5color;
             InventorySlot6.color = inventorySlot6color;
+            Slot1.color = slotColor1;
+            Slot2.color = slotColor2;
+            Slot3.color = slotColor3;
+            Slot4.color = slotColor4;
+            Slot5.color = slotColor5;
+            Slot6.color = slotColor6;
 
 
             elapsedTime += Time.deltaTime;
@@ -307,6 +343,12 @@ public class TextScrollAndCameraPan : MonoBehaviour {
         inventorySlot4color.a = 1;
         inventorySlot5color.a = 1;
         inventorySlot6color.a = 1;
+        slotColor1.a = 1;
+        slotColor2.a = 1;
+        slotColor3.a = 1;
+        slotColor4.a = 1;
+        slotColor5.a = 1;
+        slotColor6.a = 1;
 
         profile.color = profileColor;
         characterSprite.color = characterSpriteColor;
@@ -327,6 +369,12 @@ public class TextScrollAndCameraPan : MonoBehaviour {
         InventorySlot4.color = inventorySlot4color;
         InventorySlot5.color = inventorySlot5color;
         InventorySlot6.color = inventorySlot6color;
+        Slot1.color = slotColor1;
+        Slot2.color = slotColor2;
+        Slot3.color = slotColor3;
+        Slot4.color = slotColor4;
+        Slot5.color = slotColor5;
+        Slot6.color = slotColor6;
     }
 
 
