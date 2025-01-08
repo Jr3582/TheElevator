@@ -3,22 +3,39 @@ using UnityEngine.UI;
 
 public class InventorySlot : MonoBehaviour
 {
-    public Image icon; // The UI Image where the item's icon will appear
-    private string currentItemName;
+    public string itemName; // Name of the item
+    public Sprite itemIcon; // Icon representing the item
+    public Image iconImage; // UI image to display the item icon
 
-    public bool IsEmpty => string.IsNullOrEmpty(currentItemName);
+    public bool IsEmpty => string.IsNullOrEmpty(itemName);
 
-    public void SetItem(string itemName, Sprite itemIcon)
+    // Method to set the item in the slot
+    public void SetItem(string newItemName, Sprite newItemIcon)
     {
-        currentItemName = itemName; // Store the item name
-        icon.sprite = itemIcon; // Set the icon
-        icon.enabled = true; // Make the icon visible
+        itemName = newItemName;
+        itemIcon = newItemIcon;
+        iconImage.sprite = itemIcon;
+        iconImage.enabled = true; // Make the icon visible
     }
 
     public void ClearSlot()
     {
-        currentItemName = null; // Clear the item name
-        icon.sprite = null; // Remove the icon
-        icon.enabled = false; // Hide the icon
+        itemName = null;
+        itemIcon = null;
+        iconImage.sprite = null;
+        iconImage.enabled = false; // Hide the icon
+    }
+
+    // Method to use the item
+    public void UseItem()
+    {
+        if (itemName == "Food")
+        {
+            // Call method to decrease hunger, assuming a HungerBarScript exists
+            FindObjectOfType<HungerBarScript>().DepleteHunger(-10); // Example: Decrease hunger
+        }
+
+        // Remove the item after using it
+        ClearSlot();
     }
 }
