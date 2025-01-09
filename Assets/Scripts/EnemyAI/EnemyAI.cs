@@ -1,97 +1,168 @@
 using UnityEngine;
-using UnityEngine.AI;
 
 public class EnemyAI : MonoBehaviour
 {
-    public float roamSpeed = 2f;
-    public float chaseSpeed = 4f;
-    public float detectionRange = 10f;
-    public float fieldOfViewAngle = 110f;
-    public Transform player;
-    public Transform[] patrolPoints;
-    public float groundCheckDistance = 1f; // Distance to check for ground
-    public LayerMask groundLayer; // Layer to identify ground
+    public Transform player; // Player's transform
+    public float speed = 2f; // Speed while chasing
+    public float chaseSpeed = 4f; // Speed when chasing
+    public float detectionRadius = 5f; // Radius for detecting the player
+    public LayerMask playerLayer; // Layer to detect the player
+    public float attackCooldown = 1f; // Cooldown time between attacks
 
-    private int currentPatrolPoint = 0;
-    private NavMeshAgent agent;
-    private bool isChasing = false;
+    private Rigidbody2D rb;
+    private Animator animator; // Animator reference for controlling animations
+    private bool isChasing = false; // Whether the enemy is chasing the player
+    private bool isAttacking = false; // Whether the enemy is attacking
+    private float currentAttackCooldown = 0f; // Tracks the cooldown between attacks
 
-    void Start()
+    public CircleCollider2D attackCollider; // Public CircleCollider2D for the attack range
+    private Collider2D playerCollider;
+
+    private void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-        agent.speed = roamSpeed;
-        if (patrolPoints.Length > 0)
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>(); // Initialize animator
+
+        if (attackCollider == null)
         {
-            agent.SetDestination(patrolPoints[currentPatrolPoint].position);
+            attackCollider = GetComponent<CircleCollider2D>(); // If not assigned, attempt to get the CircleCollider2D
         }
     }
 
-    void Update()
+    private void Update()
     {
-        if (isChasing)
+        // Check if the enemy is in range of the player
+        if (Vector2.Distance(transform.position, player.position) <= detectionRadius)
         {
-            if (CanMoveForward())
-                ChasePlayer();
-        }
-        else
-        {
-            if (CanMoveForward())
-                Roam();
-        }
-
-        DetectPlayer();
-    }
-
-    private void Roam()
-    {
-        if (agent.remainingDistance < 0.5f)
-        {
-            currentPatrolPoint = (currentPatrolPoint + 1) % patrolPoints.Length;
-            agent.SetDestination(patrolPoints[currentPatrolPoint].position);
-        }
-    }
-
-    private void ChasePlayer()
-    {
-        agent.speed = chaseSpeed;
-        agent.SetDestination(player.position);
-    }
-
-    private void DetectPlayer()
-    {
-        Vector3 directionToPlayer = player.position - transform.position;
-        float angle = Vector3.Angle(directionToPlayer, transform.forward);
-
-        if (angle < fieldOfViewAngle / 2f && directionToPlayer.magnitude < detectionRange)
-        {
-            RaycastHit hit;
-            if (Physics.Raycast(transform.position, directionToPlayer.normalized, out hit, detectionRange))
-            {
-                if (hit.collider.CompareTag("Player"))
-                {
-                    isChasing = true;
-                }
-            }
+            isChasing = true;
         }
         else
         {
             isChasing = false;
         }
-    }
 
-    // Check if there's ground ahead before moving
-    private bool CanMoveForward()
-    {
-        Vector3 rayOrigin = transform.position + Vector3.forward * agent.radius;
-        RaycastHit hit;
-
-        if (Physics.Raycast(rayOrigin, Vector3.down, out hit, groundCheckDistance, groundLayer))
+        if (isChasing)
         {
-            Debug.DrawRay(rayOrigin, Vector3.down * groundCheckDistance, Color.green);
-            return true; // Ground detected
+            // Trigger the awake animation when the enemy detects the player for the first time
+            PlayAwakeAnimation();
+
+            // Move towards the player
+            MoveTowards(player.position, chaseSpeed);
+        }
+        else
+        {
+            // Stay idle if not chasing the player
+            StayIdle();
         }
 
-        Debug.DrawRay(rayOrigin, Vector3.down * groundCheckDistance, Color.red);
-        return false; // No ground detected
+        // Check if the player is within attack range and the cooldown is finished
+        if (isChasing && !isAttacking && attackCollider.IsTouching(playerCollider) && currentAttackCooldown <= 0)
+        {
+            // If player is inside collider, keep attacking
+            AttackPlayer(player.gameObject);
+        }
+
+        // Handle attack cooldown
+        if (currentAttackCooldown > 0)
+        {
+            currentAttackCooldown -= Time.deltaTime;
+        }
+    }
+
+    private void StayIdle()
+    {
+        rb.velocity = Vector2.zero; // Stop all movement
+        SetIdleAnimation(); // Set idle animation when stationary
+    }
+
+    private void MoveTowards(Vector2 target, float moveSpeed)
+    {
+        Vector2 direction = (target - (Vector2)transform.position);
+        direction.y = 0;  // Ignore vertical movement
+        direction = direction.normalized;
+
+        rb.velocity = new Vector2(direction.x * moveSpeed, rb.velocity.y);
+
+        // Flip the enemy to face the player
+        FlipDirection(direction.x);
+
+        SetWalkAnimation(); // Set walking animation while moving
+    }
+
+    private void FlipDirection(float directionX)
+    {
+        // Flip the enemy's facing direction by scaling the X axis
+        Vector3 localScale = transform.localScale;
+
+        if (directionX < 0 && localScale.x > 0)
+        {
+            localScale.x = -localScale.x; // Flip to the left
+        }
+        else if (directionX > 0 && localScale.x < 0)
+        {
+            localScale.x = -localScale.x; // Flip to the right
+        }
+
+        transform.localScale = localScale;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            // Only attack if within the collider's radius and cooldown is over
+            if (currentAttackCooldown <= 0)
+            {
+                SetAttackAnimation();
+                AttackPlayer(other.gameObject);
+            }
+        }
+    }
+
+    // Function to apply damage to the player (you can customize this)
+    private void AttackPlayer(GameObject player)
+    {
+        // Assuming you have a PlayerHealth script that handles the player's health
+        HealthScript playerHealth = player.GetComponent<HealthScript>();
+        if (playerHealth != null)
+        {
+            playerHealth.DepleteHealth(0.5f); // Apply damage to the player (change as needed)
+        }
+
+        // Reset the attack cooldown
+        currentAttackCooldown = attackCooldown;
+    }
+
+    private void PlayAwakeAnimation()
+    {
+        animator.SetTrigger("Awake"); // Trigger the awake animation when the enemy detects the player
+    }
+
+    private void SetIdleAnimation()
+    {
+        animator.SetBool("IsWalking", false); // Ensure walking animation is off
+        animator.SetBool("IsIdle", true); // Set idle animation on
+    }
+
+    private void SetWalkAnimation()
+    {
+        animator.SetBool("IsWalking", true); // Set walking animation on
+        animator.SetBool("IsIdle", false); // Ensure idle animation is off
+    }
+
+    private void SetAttackAnimation()
+    {
+        animator.SetTrigger("Attack"); // Trigger the attack animation
+    }
+
+    private void OnDrawGizmosSelected()
+    {
+        // Visualize detection radius and attack range
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, detectionRadius);
+
+        // Visualize ground check
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, 0.2f);
     }
 }
