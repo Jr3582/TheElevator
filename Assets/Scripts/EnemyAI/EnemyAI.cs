@@ -56,11 +56,12 @@ public class EnemyAI : MonoBehaviour
         }
 
         // Check if the player is within attack range and the cooldown is finished
-        if (isChasing && !isAttacking && attackCollider.IsTouching(playerCollider) && currentAttackCooldown <= 0)
+        if (isChasing && !isAttacking && playerCollider != null && attackCollider.IsTouching(playerCollider) && currentAttackCooldown <= 0)
         {
-            // If player is inside collider, keep attacking
-            AttackPlayer(player.gameObject);
+            // If the player is inside the collider, attack
+            AttackPlayer(playerCollider.gameObject);
         }
+
 
         // Handle attack cooldown
         if (currentAttackCooldown > 0)
@@ -110,12 +111,19 @@ public class EnemyAI : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // Only attack if within the collider's radius and cooldown is over
+            playerCollider = other;
             if (currentAttackCooldown <= 0)
             {
                 SetAttackAnimation();
                 AttackPlayer(other.gameObject);
             }
+        }
+    }
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerCollider = null;
         }
     }
 

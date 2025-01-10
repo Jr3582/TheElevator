@@ -3,20 +3,16 @@ using UnityEngine.UI;
 
 public class InventoryManager : MonoBehaviour
 {
-    public InventorySlot[] slots; // Array to hold all the inventory slots (6 slots for hotbar)
-    private int selectedSlotIndex = 0; // Default to the first slot (index 0)
-    private Color originalColor; // Store the original color of the slot image
+    public InventorySlot[] slots;
+    private int selectedSlotIndex = 0;
+    private Color originalColor;
 
     void Start()
     {
-        // Save the original color of the first slot (assumes all slots have the same initial color)
         if (slots.Length > 0)
         {
             originalColor = slots[0].iconImage.color;
         }
-
-        // Set the first slot to be highlighted by default
-        HighlightSelectedSlot(selectedSlotIndex);
     }
 
     void Update()
@@ -27,23 +23,21 @@ public class InventoryManager : MonoBehaviour
 
     private void HandleSlotSelection()
     {
-        // Listen for number key inputs (1-6)
         for (int i = 0; i < slots.Length; i++)
         {
-            if (Input.GetKeyDown(KeyCode.Alpha1 + i)) // Keys 1 to 6
+            if (Input.GetKeyDown(KeyCode.Alpha1 + i))
             {
                 selectedSlotIndex = i;
-                HighlightSelectedSlot(i); // Highlight the selected slot
+                HighlightSelectedSlot(i);
             }
         }
     }
 
     private void UseSelectedItem()
     {
-        // Use the item from the selected slot when pressing Enter
         if (selectedSlotIndex >= 0 && selectedSlotIndex < slots.Length)
         {
-            if (Input.GetKeyDown(KeyCode.Return)) // Press Enter to use the selected item
+            if (Input.GetKeyDown(KeyCode.Return))
             {
                 if (!slots[selectedSlotIndex].IsEmpty)
                 {
@@ -55,28 +49,25 @@ public class InventoryManager : MonoBehaviour
 
     private void HighlightSelectedSlot(int index)
     {
-        // Reset all slots to their original color
         for (int i = 0; i < slots.Length; i++)
         {
-            slots[i].iconImage.color = originalColor; // Revert to the saved color
+            slots[i].iconImage.color = originalColor;
         }
 
-        // Highlight the selected slot
-        slots[index].iconImage.color = new Color(1f, 1f, 1f, 0.5f); // White with half opacity
+        slots[index].iconImage.color = new Color(1f, 1f, 1f, 0.5f);
     }
 
-    // Method to add the item to the first available slot in the inventory
     public bool AddItemToInventory(string itemName, Sprite itemIcon)
     {
         for (int i = 0; i < slots.Length; i++)
         {
-            if (slots[i].IsEmpty) // Check for the first empty slot
+            if (slots[i].IsEmpty)
             {
-                slots[i].SetItem(itemName, itemIcon); // Assign the item to the slot
-                return true; // Successfully added
+                slots[i].SetItem(itemName, itemIcon);
+                return true;
             }
         }
 
-        return false; // No empty slots
+        return false;
     }
 }

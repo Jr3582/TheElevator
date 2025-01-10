@@ -19,11 +19,10 @@ public class HungerBarScript : MonoBehaviour
 
     private IEnumerator LoseHungerEvery5Sec() {
         while (true) {
-            Debug.Log("Bazinga");
 
-            DepleteHunger(0.5f);
+            DepleteHunger(2f);
 
-            yield return new WaitForSeconds(5f);
+            yield return new WaitForSeconds(10f);
         }
     }
 

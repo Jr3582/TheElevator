@@ -9,13 +9,12 @@ public class InventorySlot : MonoBehaviour
 
     public bool IsEmpty => string.IsNullOrEmpty(itemName);
 
-    // Method to set the item in the slot
     public void SetItem(string newItemName, Sprite newItemIcon)
     {
         itemName = newItemName;
         itemIcon = newItemIcon;
         iconImage.sprite = itemIcon;
-        iconImage.enabled = true; // Make the icon visible
+        iconImage.enabled = true;
     }
 
     public void ClearSlot()
@@ -23,7 +22,7 @@ public class InventorySlot : MonoBehaviour
         itemName = null;
         itemIcon = null;
         iconImage.sprite = null;
-        iconImage.enabled = false; // Hide the icon
+        iconImage.enabled = false;
     }
 
     // Method to use the item
@@ -31,11 +30,10 @@ public class InventorySlot : MonoBehaviour
     {
         if (itemName == "Food")
         {
-            // Call method to decrease hunger, assuming a HungerBarScript exists
-            FindObjectOfType<HungerBarScript>().DepleteHunger(-10); // Example: Decrease hunger
+            FindObjectOfType<HealthScript>().DepleteHealth(-1);
+            FindObjectOfType<HungerBarScript>().DepleteHunger(-10);
         }
 
-        // Remove the item after using it
         ClearSlot();
     }
 }

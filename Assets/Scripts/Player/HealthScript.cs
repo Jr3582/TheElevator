@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class HealthScript : MonoBehaviour
 {
@@ -11,11 +12,13 @@ public class HealthScript : MonoBehaviour
     public Image HealthBarImage1;
     public Image HealthBarImage2;
     public Image HealthBarImage3;
+    public GameObject gameOverPanel;
 
     void Start()
     {
         currentHealth = maxHealth;
         UpdateHealthBar();
+        gameOverPanel.SetActive(false);
     }
 
     void Update()
@@ -29,6 +32,10 @@ public class HealthScript : MonoBehaviour
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); 
         UpdateHealthBar();
+        if (currentHealth <= 0)
+        {
+            TriggerGameOver();
+        }
     }
 
     private void UpdateHealthBar()
@@ -65,5 +72,20 @@ public class HealthScript : MonoBehaviour
     {
         currentHealth = maxHealth;
         UpdateHealthBar();
+    }
+        private void TriggerGameOver()
+    {
+        Time.timeScale = 0; // Pause the game
+        gameOverPanel.SetActive(true); // Show the game over panel
+    }
+        public void ReplayLevel()
+    {
+        Time.timeScale = 1; // Resume the game
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Reload current scene
+    }
+        public void BackToMainMenu()
+    {
+        Time.timeScale = 1; // Resume the game
+        SceneManager.LoadScene("MainMenu"); // Load the main menu scene
     }
 }
