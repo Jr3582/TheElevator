@@ -16059,7 +16059,7 @@ MonoBehaviour:
   cameraTargetPosition: {x: -200, y: -22.5, z: -10}
   scrollSpeed: 0.2
   panSpeed: 0.35
-  typingSpeed: 0.0065
+  typingSpeed: 0.065
   fullText: The year is 2125, and humanity is on the brink of extinction.A year prior,
     a mysterious disease that causes mass hysteria emerged.Everybody that you once
     know and love is dead and gone...You have also been infected.Find a cure and
@@ -17467,7 +17467,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b4dc1bcf560729445b26cd747725e1ac, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 21660cfc7aeb4884eaef99bf372e8416, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
